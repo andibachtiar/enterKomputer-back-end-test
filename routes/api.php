@@ -5,12 +5,11 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\OrderController;
 
-Route::get('/user', function (Request $request) {
-    return $request->user();
-})->middleware('auth:sanctum');
+Route::resource("product", ProductController::class);
 
-
-Route::get("products", [ProductController::class, "index"]);
-
-
-Route::resource("order", OrderController::class);
+Route::resource("order", OrderController::class)
+    ->missing(function() {
+        return response()->json([
+            "message" => "Model not found!"
+        ], 404);
+    });

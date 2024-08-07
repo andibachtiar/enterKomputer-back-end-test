@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\product;
 use Illuminate\Http\Request;
+use App\Http\Resources\ProductResource;
 
 class ProductController extends Controller
 {
@@ -12,10 +13,10 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $product = Product::with("category:id,name")
+        $products = Product::with("category:id,name")
             ->get();
 
-        return response()->json($product);
+        return ProductResource::collection($products);
     }
 
     /**

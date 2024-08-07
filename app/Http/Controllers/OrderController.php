@@ -6,6 +6,8 @@ use App\Models\order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Services\OrderService;
+use App\Http\Resources\OrderResource;
+use Carbon\Carbon;
 
 class OrderController extends Controller
 {
@@ -14,9 +16,7 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $order = Order::all();
-
-        return response()->json($order);
+        return OrderResource::collection(Order::with(["table"])->get());
     }
 
     /**
@@ -40,9 +40,16 @@ class OrderController extends Controller
 
         $order = $service->processOrder($validator->validated());
 
-        Order::create($order);
+        $created = Order::create($order);
 
-        return response()->json($order);
+        return response()->json([
+            "order" => [
+                "table" => $created->table->name,
+                "total_price" => $created->total_price,
+                "datetime" => Carbon::parse($created->created_at)->format("Y-m-d H:i"),
+            ],
+            "print" => $order["print"]
+        ]);
     }
 
     /**
@@ -50,8 +57,23 @@ class OrderController extends Controller
      */
     public function show(Order $order)
     {
-        return response()->json($order);
+
+        if($order->id == null) {
+            return response()->json([
+                "message" => "Order not found"
+            ], 404);
+        }
+
+        $response = [
+            "table" => $order->table->name,
+            "total_price" => $order->total_price,
+            "datetime" => Carbon::parse($order->created_at)->format("Y-m-d H:i"),
+            "order_items" => $order->order_items,
+        ];
+
+        return response()->json($response);
     }
+
 
     /**
      * Show the form for editing the specified resource.
