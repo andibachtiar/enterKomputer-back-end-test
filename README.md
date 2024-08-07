@@ -16,6 +16,6 @@ Untuk menjalankan project, harap lakukan langkah-langkah dibawah ini:
 # jalankan file migration
 $ php artisan migrate:fresh --seed
 
-# jalankan web server
+# jalankan web server (optional)
 $ php artisan serve
 ```
