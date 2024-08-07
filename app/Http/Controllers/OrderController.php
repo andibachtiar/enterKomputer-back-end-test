@@ -73,29 +73,4 @@ class OrderController extends Controller
 
         return response()->json($response);
     }
-
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(order $order)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, order $order)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(order $order)
-    {
-        //
-    }
 }

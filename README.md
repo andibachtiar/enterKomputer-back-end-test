@@ -6,9 +6,11 @@ Project ini dibuat untuk memenuhi tugas test untuk melamar pekerjaan sebagai bac
 
 Untuk menjalankan project, harap lakukan langkah-langkah dibawah ini:
 
-1. Buat database
+1. copy .env.example dan rubah nama file menjadi .env
 
-2. Jalankan perintah berikut di terminal
+2. Buat database dan import file .sql yang telah disediakan
+
+3. Jalankan perintah berikut di terminal
 
 ```shell
 # jalankan file migration
